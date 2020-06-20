@@ -1,0 +1,13 @@
+# test directories
+
+# asset directories
+./build
+./docs
+
+# code coverage directories
+coverage
+
+# configs
+.yarn-metadata.json
+yarn-error.log
+yarn-debug.log
