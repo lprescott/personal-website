@@ -1,5 +1,6 @@
 {
 	"env": {
+		"node": true,
 		"browser": true,
 		"es6": true
 	},
@@ -21,5 +22,13 @@
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "single"],
 		"semi": ["error", "never"]
-	}
+	},
+	"overrides": [
+		{
+			"files": ["**/*.test.js"],
+			"env": {
+				"jest": true
+			}
+		}
+	]
 }
