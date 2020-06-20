@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="310" height="310" viewBox="0 0 310 310">
+  <defs>
+    <clipPath id="clip-LP_-_Two_Tone">
+      <rect width="310" height="310"/>
+    </clipPath>
+  </defs>
+  <g id="LP_-_Two_Tone" data-name="LP - Two Tone" clip-path="url(#clip-LP_-_Two_Tone)">
+    <rect width="310" height="310" fill="rgba(0,0,0,0)"/>
+    <text id="P" transform="translate(43 295)" fill="#a9a9a9" font-size="400" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">P</tspan></text>
+    <text id="L" transform="translate(43 295)" fill="#d3d3d3" font-size="400" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">L</tspan></text>
+  </g>
+</svg>
