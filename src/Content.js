@@ -8,6 +8,7 @@ const Content = (props) => {
 			height="100vh"
 			width={`calc(100vw - ${props.content.x})`}
 			animate={props.content}
+			background={null}
 		>
 			{props.children}
 		</Frame>

@@ -42,6 +42,7 @@ const SideDrawer = (props) => {
 			height={`${getSideDrawerHeight()}em`}
 			top={`calc(50vh - ${getSideDrawerHeight() / 2}em)`}
 			width={null}
+			background={null}
 			style={{
 				borderBottomRightRadius: '1em',
 				borderTopRightRadius: '1em',

@@ -10,7 +10,7 @@ const common = {
 			root: {
 				transition: 'max-width 0.25s ease-in',
 				height: '100%',
-				backgroundColor: '#1C1C1D',
+				backgroundColor: 'rgba(28, 28, 28, 1)',
 				color: 'white'
 			}
 		},
