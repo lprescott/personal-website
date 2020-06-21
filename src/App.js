@@ -10,7 +10,7 @@ import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import routes from './nav/routes'
 import { findRouteIndex } from './common/helper'
 
-function App(props) {
+const App = () => {
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
 
@@ -78,7 +78,6 @@ function App(props) {
 										initial="initial"
 										variants={pageTransition}
 										style={{ height: '100vh' }}
-										custom={props}
 									>
 										<CurrentComponent
 											setDarkMode={setDarkMode}

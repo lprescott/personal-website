@@ -7,6 +7,13 @@ span.MuiTab-wrapper {
 
 div.MuiTabs-root {
 	button.MuiTab-labelIcon {
-		min-height: 70px;
+		min-height: 70px; // TAB_HEIGHT
 	}
+	button.MuiButtonBase-root.MuiIconButton-root {
+		color: white;
+	}
+}
+
+.MuiTouchRipple-root {
+	color: 'white';
 }

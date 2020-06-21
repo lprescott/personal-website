@@ -9,6 +9,7 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import { Link } from 'react-router-dom'
 import routes from '../nav/routes'
 import { findRouteIndex } from '../common/helper'
+import { TAB_HEIGHT, CHEVRON_HEIGHT, DRAWER_PADDING } from '../common/constants'
 
 const useStyles = makeStyles({
 	root: {
@@ -21,12 +22,8 @@ const SideDrawer = (props) => {
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
-		const tabHeight = 4.5
-		const chevronHeight = 3
 		const tabCount = routes.length
-		const offset = 10
-
-		return tabCount * tabHeight + chevronHeight + offset
+		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + DRAWER_PADDING
 	}
 
 	return (
