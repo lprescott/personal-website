@@ -3,14 +3,14 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { darkTheme, lightTheme } from './common/styles/themes'
 import Content from './Content'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SideDrawer from './SideDrawer/SideDrawer'
 import { useCycle, AnimatePresence, motion } from 'framer-motion'
-import { Switch, Route, useLocation } from 'react-router-dom'
+import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import routes from './nav/routes'
 import { findRouteIndex } from './common/helper'
 
-function App() {
+function App(props) {
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
 
@@ -21,22 +21,31 @@ function App() {
 
 	const location = useLocation()
 
-	// console.log(location.state?.prevPath)
-	const previousIndex = findRouteIndex(location.state?.prevPath)
-	const currentIndex = findRouteIndex(location.pathname)
+	const [previousIndex, setPreviousIndex] = React.useState(
+		findRouteIndex(location.state?.prevPath)
+	)
+	const [currentIndex, setCurrentIndex] = React.useState(
+		findRouteIndex(location.pathname)
+	)
 
-	// console.log(`Previous: ${previousIndex}`)
-	// console.log(`Current: ${currentIndex}`)
-	// console.log(previousIndex > currentIndex ? '-100vh' : '100vh')
+	useEffect(() => {
+		setPreviousIndex(findRouteIndex(location.state?.prevPath))
+		setCurrentIndex(findRouteIndex(location.pathname))
+	}, [location])
 
 	const pageTransition = {
 		in: {
 			opacity: 1,
 			y: 0
 		},
-		out: {
-			opacity: 0,
-			y: previousIndex < currentIndex ? '-100vh' : '100vh'
+		out: () => {
+			const previousIndex = findRouteIndex(location.pathname)
+			const currentIndex = findRouteIndex(window.location.pathname)
+
+			return {
+				opacity: 0,
+				y: previousIndex < currentIndex ? '-100vh' : '100vh'
+			}
 		},
 		initial: {
 			opacity: 0,
@@ -73,6 +82,7 @@ function App() {
 										initial="initial"
 										variants={pageTransition}
 										style={{ height: '100vh' }}
+										custom={props}
 									>
 										<CurrentComponent
 											setDarkMode={setDarkMode}
@@ -91,4 +101,4 @@ function App() {
 	)
 }
 
-export default App
+export default withRouter(App)

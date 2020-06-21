@@ -2,7 +2,7 @@ import './SideDrawer.scss'
 import { makeStyles } from '@material-ui/core/styles'
 import { Tabs, Tab, IconButton } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Frame } from 'framer'
 import { useCycle } from 'framer-motion'
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded'
@@ -18,24 +18,6 @@ const useStyles = makeStyles({
 
 const SideDrawer = (props) => {
 	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 100 })
-
-	const [value, setValue] = React.useState(0)
-	const handleChange = (event, newValue) => {
-		setValue(newValue)
-	}
-
-	useEffect(() => {
-		let active = true
-
-		active &&
-			props.location &&
-			setValue(findRouteIndex(props.location.pathname))
-
-		return () => {
-			active = false
-		}
-	}, [props.location])
-
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
@@ -61,8 +43,7 @@ const SideDrawer = (props) => {
 			}}
 		>
 			<Tabs
-				value={value}
-				onChange={handleChange}
+				value={findRouteIndex(props.location.pathname)}
 				aria-label="Vertical Routable Tabs"
 				orientation="vertical"
 				className={classes.root}
