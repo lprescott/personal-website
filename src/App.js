@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import React, { useState } from 'react'
 import SideDrawer from './SideDrawer/SideDrawer'
 import { useCycle } from 'framer-motion'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import routes from './nav/routes'
 
 function App() {
 	const [darkMode, setDarkMode] = useState(false)
@@ -17,22 +19,39 @@ function App() {
 	const [content, moveContent] = useCycle({ x: '5em' }, { x: '12em' })
 
 	return (
-		<ThemeProvider theme={theme}>
-			<CssBaseline />
-			<SideDrawer
-				drawer={drawer}
-				openDrawer={() => {
-					openDrawer()
-					moveContent()
-				}}
-			/>
-			<Content
-				darkMode={darkMode}
-				setDarkMode={setDarkMode}
-				content={content}
-				moveContent={moveContent}
-			/>
-		</ThemeProvider>
+		<BrowserRouter>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<SideDrawer
+					drawer={drawer}
+					openDrawer={() => {
+						openDrawer()
+						moveContent()
+					}}
+				/>
+				<Content content={content} moveContent={moveContent}>
+					<Switch>
+						{routes.map((route) => {
+							const CurrentComponent = route.component
+
+							return (
+								<Route
+									key={route.label + '-route'}
+									exact
+									path={route.path}
+								>
+									<CurrentComponent
+										setDarkMode={setDarkMode}
+									/>
+								</Route>
+							)
+						})}
+
+						<Route>Oh no!</Route>
+					</Switch>
+				</Content>
+			</ThemeProvider>
+		</BrowserRouter>
 	)
 }
 
