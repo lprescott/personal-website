@@ -4,5 +4,6 @@
 	"semi": false,
 	"singleQuote": true,
 	"jsxSingleQuote": false,
-	"trailingComma": "none"
+	"trailingComma": "none",
+	"endOfLine": "crlf"
 }
