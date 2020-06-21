@@ -9,6 +9,7 @@ import { useCycle, AnimatePresence, motion } from 'framer-motion'
 import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import routes from './nav/routes'
 import { findRouteIndex } from './common/helper'
+import { DRAWER_WIDTH_CLOSED, DRAWER_WIDTH_OPEN } from './common/constants'
 
 const App = () => {
 	const [darkMode, setDarkMode] = useState(false)
@@ -16,8 +17,14 @@ const App = () => {
 
 	const theme = createMuiTheme(currentTheme)
 
-	const [drawer, openDrawer] = useCycle({ width: '5em' }, { width: '12em' })
-	const [content, moveContent] = useCycle({ x: '5em' }, { x: '12em' })
+	const [drawer, openDrawer] = useCycle(
+		{ width: DRAWER_WIDTH_CLOSED },
+		{ width: DRAWER_WIDTH_OPEN }
+	)
+	const [content, moveContent] = useCycle(
+		{ x: DRAWER_WIDTH_CLOSED },
+		{ x: DRAWER_WIDTH_OPEN }
+	)
 
 	const location = useLocation()
 

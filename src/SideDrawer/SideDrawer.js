@@ -9,7 +9,12 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 import { Link } from 'react-router-dom'
 import routes from '../nav/routes'
 import { findRouteIndex } from '../common/helper'
-import { TAB_HEIGHT, CHEVRON_HEIGHT, DRAWER_PADDING } from '../common/constants'
+import {
+	TAB_HEIGHT,
+	CHEVRON_HEIGHT,
+	DRAWER_PADDING,
+	DRAWER_WIDTH_CLOSED
+} from '../common/constants'
 
 const useStyles = makeStyles({
 	root: {
@@ -18,7 +23,7 @@ const useStyles = makeStyles({
 })
 
 const SideDrawer = (props) => {
-	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 100 })
+	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 135 })
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
@@ -44,6 +49,13 @@ const SideDrawer = (props) => {
 				aria-label="Vertical Routable Tabs"
 				orientation="vertical"
 				className={classes.root}
+				TabIndicatorProps={{
+					style: {
+						width: '.3em',
+						backgroundColor: '#97E9EF',
+						left: '0'
+					}
+				}}
 			>
 				{routes.map((route) => (
 					<Tab
@@ -69,7 +81,13 @@ const SideDrawer = (props) => {
 					bottom={5}
 					transition={{ duration: 0.1 }}
 				>
-					<IconButton>
+					<IconButton
+						aria-label={
+							props.drawer.width === DRAWER_WIDTH_CLOSED
+								? 'Open Drawer'
+								: 'Close Drawer'
+						}
+					>
 						<ArrowForwardIosRoundedIcon classes={classes} />
 					</IconButton>
 				</Frame>

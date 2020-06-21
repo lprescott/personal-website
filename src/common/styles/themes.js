@@ -10,7 +10,7 @@ const common = {
 			root: {
 				transition: 'max-width 0.25s ease-in',
 				height: '100%',
-				backgroundColor: 'rgba(28, 28, 28, 1)',
+				backgroundColor: 'rgb(28, 28, 28)',
 				color: 'white'
 			}
 		},
@@ -18,7 +18,7 @@ const common = {
 			root: {
 				padding: 'unset',
 				'&$selected': {
-					backgroundColor: '#4B4B4C'
+					backgroundColor: 'rgb(68, 68, 68)'
 				}
 			},
 			wrapper: {
