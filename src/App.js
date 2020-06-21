@@ -5,7 +5,7 @@ import Content from './Content'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import React, { useState } from 'react'
 import SideDrawer from './SideDrawer/SideDrawer'
-import { useCycle } from 'framer-motion'
+import { useCycle, AnimatePresence, motion } from 'framer-motion'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import routes from './nav/routes'
 
@@ -30,25 +30,33 @@ function App() {
 					}}
 				/>
 				<Content content={content} moveContent={moveContent}>
-					<Switch>
-						{routes.map((route) => {
-							const CurrentComponent = route.component
+					<AnimatePresence>
+						<Switch>
+							{routes.map((route) => {
+								const CurrentComponent = route.component
 
-							return (
-								<Route
-									key={route.label + '-route'}
-									exact
-									path={route.path}
-								>
-									<CurrentComponent
-										setDarkMode={setDarkMode}
-									/>
-								</Route>
-							)
-						})}
+								return (
+									<Route
+										key={route.label + '-route'}
+										exact
+										path={route.path}
+									>
+										<motion.div
+											exit={{ opacity: 0 }}
+											animate={{ opacity: 1 }}
+											initial={{ opacity: 0 }}
+										>
+											<CurrentComponent
+												setDarkMode={setDarkMode}
+											/>
+										</motion.div>
+									</Route>
+								)
+							})}
 
-						<Route>Oh no!</Route>
-					</Switch>
+							<Route>Oh no!</Route>
+						</Switch>
+					</AnimatePresence>
 				</Content>
 			</ThemeProvider>
 		</BrowserRouter>
