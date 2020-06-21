@@ -13,12 +13,6 @@ import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounde
 
 const useStyles = makeStyles({
 	root: {
-		maxWidth: (props) => (props.open ? '12em' : '5em')
-	}
-})
-
-const useStyles2 = makeStyles({
-	root: {
 		color: 'white'
 	}
 })
@@ -31,51 +25,52 @@ const SideDrawer = (props) => {
 		setValue(newValue)
 	}
 
-	const classes = useStyles(props)
-	const classes2 = useStyles2()
+	const classes = useStyles()
 
 	return (
-		<Tabs
-			value={value}
-			onChange={handleChange}
-			aria-label="Vertical Routable Tabs"
-			orientation="vertical"
-			className={classes.root}
-		>
-			<Tab icon={<HomeRoundedIcon fontSize="large" />} label="home" />
-			<Tab icon={<PersonIcon fontSize="large" />} label="about" />
-			<Tab
-				icon={<AccountTreeRoundedIcon fontSize="large" />}
-				label="projects"
-			/>
-			<Tab
-				icon={<DescriptionRoundedIcon fontSize="large" />}
-				label="resume"
-			/>
-			<Tab icon={<PersonIcon fontSize="large" />} label="contact" />
-
-			<Frame
-				animate={flip}
-				onTap={() => {
-					cycle()
-					props.setOpen(!props.open)
-				}}
-				size={50}
-				background={null}
-				bottom={5}
-				transition={{ duration: 0.1 }}
+		<Frame animate={props.drawer} height="100vh" width={null}>
+			<Tabs
+				value={value}
+				onChange={handleChange}
+				aria-label="Vertical Routable Tabs"
+				orientation="vertical"
+				className={classes.root}
 			>
-				<IconButton>
-					<ArrowForwardIosRoundedIcon classes={classes2} />
-				</IconButton>
-			</Frame>
-		</Tabs>
+				<Tab icon={<HomeRoundedIcon fontSize="large" />} label="home" />
+				<Tab icon={<PersonIcon fontSize="large" />} label="about" />
+				<Tab
+					icon={<AccountTreeRoundedIcon fontSize="large" />}
+					label="projects"
+				/>
+				<Tab
+					icon={<DescriptionRoundedIcon fontSize="large" />}
+					label="resume"
+				/>
+				<Tab icon={<PersonIcon fontSize="large" />} label="contact" />
+
+				<Frame
+					animate={flip}
+					onTap={() => {
+						cycle()
+						props.openDrawer()
+					}}
+					size={50}
+					background={null}
+					bottom={5}
+					transition={{ duration: 0.1 }}
+				>
+					<IconButton>
+						<ArrowForwardIosRoundedIcon classes={classes} />
+					</IconButton>
+				</Frame>
+			</Tabs>
+		</Frame>
 	)
 }
 
 SideDrawer.propTypes = {
-	setOpen: PropTypes.func.isRequired,
-	open: PropTypes.bool.isRequired
+	openDrawer: PropTypes.func.isRequired,
+	drawer: PropTypes.object.isRequired
 }
 
 export default SideDrawer

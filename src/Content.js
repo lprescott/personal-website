@@ -1,17 +1,23 @@
 import React from 'react'
 import { Frame } from 'framer'
-import { useCycle } from 'framer-motion'
+import PropTypes from 'prop-types'
 
-const Content = () => {
-	const [twist, cycle] = useCycle({ scaleX: 1 }, { scaleX: -1 })
-
+const Content = (props) => {
 	return (
 		<div>
-			<Frame animate={twist} onTap={() => cycle()}>
+			<Frame
+				height="100vh"
+				width={`calc(100vw - ${props.content.x})`}
+				animate={props.content}
+			>
 				Test
 			</Frame>
 		</div>
 	)
+}
+
+Content.propTypes = {
+	content: PropTypes.object.isRequired
 }
 
 export default Content
