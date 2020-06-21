@@ -3,7 +3,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { darkTheme, lightTheme } from './common/styles/themes'
 import Content from './Content'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import SideDrawer from './SideDrawer/SideDrawer'
 import { useCycle, AnimatePresence, motion } from 'framer-motion'
 import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
@@ -21,17 +21,8 @@ function App(props) {
 
 	const location = useLocation()
 
-	const [previousIndex, setPreviousIndex] = React.useState(
-		findRouteIndex(location.state?.prevPath)
-	)
-	const [currentIndex, setCurrentIndex] = React.useState(
-		findRouteIndex(location.pathname)
-	)
-
-	useEffect(() => {
-		setPreviousIndex(findRouteIndex(location.state?.prevPath))
-		setCurrentIndex(findRouteIndex(location.pathname))
-	}, [location])
+	const previousIndex = findRouteIndex(location.state?.prevPath)
+	const currentIndex = findRouteIndex(location.pathname)
 
 	const pageTransition = {
 		in: {
@@ -39,12 +30,17 @@ function App(props) {
 			y: 0
 		},
 		out: () => {
-			const previousIndex = findRouteIndex(location.pathname)
-			const currentIndex = findRouteIndex(window.location.pathname)
+			/* 
+				This is tricky, so a note here:  
+				We use window.location.pathname to find the "next" index, as 
+				to calculate whether or not the slide out animation should
+				be upwards or downwards.
+			*/
+			const nextIndex = findRouteIndex(window.location.pathname)
 
 			return {
 				opacity: 0,
-				y: previousIndex < currentIndex ? '-100vh' : '100vh'
+				y: currentIndex < nextIndex ? '-100vh' : '100vh'
 			}
 		},
 		initial: {
