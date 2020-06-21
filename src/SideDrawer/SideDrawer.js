@@ -2,12 +2,13 @@ import './SideDrawer.scss'
 import { makeStyles } from '@material-ui/core/styles'
 import { Tabs, Tab, IconButton } from '@material-ui/core'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Frame } from 'framer'
 import { useCycle } from 'framer-motion'
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded'
 import { Link } from 'react-router-dom'
 import routes from '../nav/routes'
+import { findRouteIndex } from '../common/helper'
 
 const useStyles = makeStyles({
 	root: {
@@ -23,6 +24,18 @@ const SideDrawer = (props) => {
 		setValue(newValue)
 	}
 
+	useEffect(() => {
+		let active = true
+
+		active &&
+			props.location &&
+			setValue(findRouteIndex(props.location.pathname))
+
+		return () => {
+			active = false
+		}
+	}, [props.location])
+
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
@@ -33,8 +46,6 @@ const SideDrawer = (props) => {
 
 		return tabCount * tabHeight + chevronHeight + offset
 	}
-
-	console.log(getSideDrawerHeight())
 
 	return (
 		<Frame
@@ -59,7 +70,10 @@ const SideDrawer = (props) => {
 				{routes.map((route) => (
 					<Tab
 						key={route.label + '-route'}
-						to={route.to}
+						to={{
+							pathname: route.to,
+							state: { prevPath: props.location.pathname }
+						}}
 						component={Link}
 						icon={<route.icon fontSize="large" />}
 						label={route.label}
@@ -88,7 +102,8 @@ const SideDrawer = (props) => {
 
 SideDrawer.propTypes = {
 	openDrawer: PropTypes.func.isRequired,
-	drawer: PropTypes.object.isRequired
+	drawer: PropTypes.object.isRequired,
+	location: PropTypes.object.isRequired
 }
 
 export default SideDrawer

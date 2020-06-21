@@ -1,7 +1,9 @@
 import React from 'react'
 
 const Resume = () => {
-	return <div>Resume</div>
+	return (
+		<div style={{ height: '100%', backgroundColor: 'purple' }}>Resume</div>
+	)
 }
 
 export default Resume
