@@ -34,6 +34,7 @@ const SideDrawer = (props) => {
 
 	return (
 		<Frame
+			initial={{ width: DRAWER_WIDTH_CLOSED }}
 			animate={props.drawer}
 			height={`${getSideDrawerHeight()}em`}
 			top={`calc(50vh - ${getSideDrawerHeight() / 2}em)`}
@@ -69,6 +70,7 @@ const SideDrawer = (props) => {
 						component={Link}
 						icon={<route.icon fontSize="large" />}
 						label={route.label}
+						onClick={() => props.setSlideTransition(true)}
 					/>
 				))}
 
@@ -101,7 +103,8 @@ const SideDrawer = (props) => {
 SideDrawer.propTypes = {
 	openDrawer: PropTypes.func.isRequired,
 	drawer: PropTypes.object.isRequired,
-	location: PropTypes.object.isRequired
+	location: PropTypes.object.isRequired,
+	setSlideTransition: PropTypes.func.isRequired
 }
 
 export default SideDrawer

@@ -22,14 +22,22 @@ const App = () => {
 		{ width: DRAWER_WIDTH_OPEN }
 	)
 	const [content, moveContent] = useCycle(
-		{ x: DRAWER_WIDTH_CLOSED },
-		{ x: DRAWER_WIDTH_OPEN }
+		{
+			x: DRAWER_WIDTH_CLOSED,
+			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
+		},
+		{
+			x: DRAWER_WIDTH_OPEN,
+			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
+		}
 	)
 
 	const location = useLocation()
 
 	const previousIndex = findRouteIndex(location.state?.prevPath)
 	const currentIndex = findRouteIndex(location.pathname)
+
+	const [slideTransition, setSlideTransition] = React.useState(false)
 
 	const pageTransition = {
 		in: {
@@ -52,7 +60,11 @@ const App = () => {
 		},
 		initial: {
 			opacity: 0,
-			y: previousIndex > currentIndex ? '-100vh' : '100vh'
+			y: !slideTransition
+				? 0
+				: previousIndex > currentIndex
+				? '-100vh'
+				: '100vh'
 		}
 	}
 
@@ -62,6 +74,7 @@ const App = () => {
 			<SideDrawer
 				drawer={drawer}
 				location={location}
+				setSlideTransition={setSlideTransition}
 				openDrawer={() => {
 					openDrawer()
 					moveContent()

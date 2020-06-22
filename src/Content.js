@@ -1,13 +1,19 @@
 import { Frame } from 'framer'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { DRAWER_TRANSITION_LENGTH } from './common/constants'
+import {
+	DRAWER_TRANSITION_LENGTH,
+	DRAWER_WIDTH_CLOSED
+} from './common/constants'
 
 const Content = (props) => {
+	console.log(props.content)
 	return (
 		<Frame
-			height="100vh"
-			width={`calc(100vw - ${props.content.x})`}
+			initial={{
+				x: DRAWER_WIDTH_CLOSED,
+				width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
+			}}
 			animate={props.content}
 			background={null}
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
