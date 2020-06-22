@@ -13,7 +13,8 @@ import {
 	TAB_HEIGHT,
 	CHEVRON_HEIGHT,
 	DRAWER_PADDING,
-	DRAWER_WIDTH_CLOSED
+	DRAWER_WIDTH_CLOSED,
+	DRAWER_TRANSITION_LENGTH
 } from '../common/constants'
 
 const useStyles = makeStyles({
@@ -36,6 +37,7 @@ const SideDrawer = (props) => {
 			animate={props.drawer}
 			height={`${getSideDrawerHeight()}em`}
 			top={`calc(50vh - ${getSideDrawerHeight() / 2}em)`}
+			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 			width={null}
 			background={null}
 			style={{
@@ -79,7 +81,7 @@ const SideDrawer = (props) => {
 					size={50}
 					background={null}
 					bottom={5}
-					transition={{ duration: 0.1 }}
+					transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 				>
 					<IconButton
 						aria-label={
