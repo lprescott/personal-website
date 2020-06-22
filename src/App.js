@@ -12,6 +12,10 @@ import routes from './nav/routes'
 import SideDrawer from './SideDrawer/SideDrawer'
 
 const App = () => {
+	const location = useLocation()
+	const previousIndex = findRouteIndex(location.state?.prevPath)
+	const currentIndex = findRouteIndex(location.pathname)
+
 	// Theme
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
@@ -37,15 +41,8 @@ const App = () => {
 
 	// Page slide animation
 	const [slideTransition, setSlideTransition] = React.useState(false)
-
-	const location = useLocation()
-
-	const previousIndex = findRouteIndex(location.state?.prevPath)
-	const currentIndex = findRouteIndex(location.pathname)
-
 	const pageTransition = {
 		in: {
-			opacity: 1,
 			y: 0
 		},
 		out: () => {
@@ -58,12 +55,10 @@ const App = () => {
 			const nextIndex = findRouteIndex(window.location.pathname)
 
 			return {
-				opacity: 0,
 				y: currentIndex < nextIndex ? '-100vh' : '100vh'
 			}
 		},
 		initial: {
-			opacity: 0,
 			y: !slideTransition
 				? 0
 				: previousIndex > currentIndex
@@ -102,6 +97,7 @@ const App = () => {
 										initial="initial"
 										variants={pageTransition}
 										style={{ height: '100vh' }}
+										transition={{ type: 'tween' }}
 									>
 										<CurrentComponent
 											setDarkMode={setDarkMode}
@@ -112,7 +108,9 @@ const App = () => {
 							)
 						})}
 
-						<Route>Oh no!</Route>
+						<Route>
+							<a href="/home">Oh no!</a>
+						</Route>
 					</Switch>
 				</AnimatePresence>
 			</Content>

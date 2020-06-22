@@ -16,6 +16,7 @@ import {
 	DRAWER_WIDTH_CLOSED,
 	DRAWER_TRANSITION_LENGTH
 } from '../common/constants'
+import { motion } from 'framer-motion'
 
 const useStyles = makeStyles({
 	root: {
@@ -32,7 +33,7 @@ const SideDrawer = (props) => {
 	}
 
 	// Chevon animation
-	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 135 })
+	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 120 })
 
 	return (
 		<Frame
@@ -77,6 +78,7 @@ const SideDrawer = (props) => {
 				))}
 
 				<Frame
+					initial={{ scaleX: 1, x: 10 }}
 					animate={flip}
 					onTap={() => {
 						cycle()
@@ -87,15 +89,20 @@ const SideDrawer = (props) => {
 					bottom={5}
 					transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 				>
-					<IconButton
-						aria-label={
-							props.drawer.width === DRAWER_WIDTH_CLOSED
-								? 'Open Drawer'
-								: 'Close Drawer'
-						}
+					<motion.div
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 1 }}
 					>
-						<ArrowForwardIosRoundedIcon classes={classes} />
-					</IconButton>
+						<IconButton
+							aria-label={
+								props.drawer.width === DRAWER_WIDTH_CLOSED
+									? 'Open Drawer'
+									: 'Close Drawer'
+							}
+						>
+							<ArrowForwardIosRoundedIcon classes={classes} />
+						</IconButton>
+					</motion.div>
 				</Frame>
 			</Tabs>
 		</Frame>

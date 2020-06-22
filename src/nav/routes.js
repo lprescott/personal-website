@@ -11,7 +11,6 @@ import Contact from '../Contact/Contact'
 
 const routes = [
 	{
-		ordinal: 1,
 		label: 'home',
 		path: ['/', '/home'],
 		to: '/home',
@@ -19,7 +18,6 @@ const routes = [
 		component: Home
 	},
 	{
-		ordinal: 2,
 		label: 'about',
 		path: '/about',
 		to: '/about',
@@ -27,7 +25,6 @@ const routes = [
 		component: About
 	},
 	{
-		ordinal: 3,
 		label: 'projects',
 		path: '/projects',
 		to: '/projects',
@@ -35,7 +32,6 @@ const routes = [
 		component: Projects
 	},
 	{
-		ordinal: 4,
 		label: 'resume',
 		path: '/resume',
 		to: '/resume',
@@ -43,7 +39,6 @@ const routes = [
 		component: Resume
 	},
 	{
-		ordinal: 5,
 		label: 'contact',
 		path: '/contact',
 		to: '/contact',
