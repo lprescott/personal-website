@@ -1,14 +1,14 @@
 import './SideDrawer.scss'
+import { findRouteIndex } from '../common/helper'
+import { Frame } from 'framer'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import { Tabs, Tab, IconButton } from '@material-ui/core'
-import PropTypes from 'prop-types'
-import React from 'react'
-import { Frame } from 'framer'
 import { useCycle } from 'framer-motion'
 import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded'
-import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import React from 'react'
 import routes from '../nav/routes'
-import { findRouteIndex } from '../common/helper'
 import {
 	TAB_HEIGHT,
 	CHEVRON_HEIGHT,
@@ -24,13 +24,15 @@ const useStyles = makeStyles({
 })
 
 const SideDrawer = (props) => {
-	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 135 })
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
 		const tabCount = routes.length
 		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + DRAWER_PADDING
 	}
+
+	// Chevon animation
+	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 135 })
 
 	return (
 		<Frame

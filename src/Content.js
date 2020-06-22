@@ -7,7 +7,6 @@ import {
 } from './common/constants'
 
 const Content = (props) => {
-	console.log(props.content)
 	return (
 		<Frame
 			initial={{

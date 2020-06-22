@@ -1,26 +1,29 @@
 import './App.scss'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { darkTheme, lightTheme } from './common/styles/themes'
+import { DRAWER_WIDTH_CLOSED, DRAWER_WIDTH_OPEN } from './common/constants'
+import { findRouteIndex } from './common/helper'
+import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
+import { useCycle, AnimatePresence, motion } from 'framer-motion'
 import Content from './Content'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import React, { useState } from 'react'
-import SideDrawer from './SideDrawer/SideDrawer'
-import { useCycle, AnimatePresence, motion } from 'framer-motion'
-import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import routes from './nav/routes'
-import { findRouteIndex } from './common/helper'
-import { DRAWER_WIDTH_CLOSED, DRAWER_WIDTH_OPEN } from './common/constants'
+import SideDrawer from './SideDrawer/SideDrawer'
 
 const App = () => {
+	// Theme
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
-
 	const theme = createMuiTheme(currentTheme)
 
+	// Drawer animation
 	const [drawer, openDrawer] = useCycle(
 		{ width: DRAWER_WIDTH_CLOSED },
 		{ width: DRAWER_WIDTH_OPEN }
 	)
+
+	// Page shift animation
 	const [content, moveContent] = useCycle(
 		{
 			x: DRAWER_WIDTH_CLOSED,
@@ -32,12 +35,13 @@ const App = () => {
 		}
 	)
 
+	// Page slide animation
+	const [slideTransition, setSlideTransition] = React.useState(false)
+
 	const location = useLocation()
 
 	const previousIndex = findRouteIndex(location.state?.prevPath)
 	const currentIndex = findRouteIndex(location.pathname)
-
-	const [slideTransition, setSlideTransition] = React.useState(false)
 
 	const pageTransition = {
 		in: {
