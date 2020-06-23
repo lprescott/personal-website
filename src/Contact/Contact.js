@@ -1,7 +1,8 @@
 import React from 'react'
+import PageInner from '../PageInner'
 
 const Contact = () => {
-	return <div style={{ backgroundColor: 'yellow' }}>Contact</div>
+	return <PageInner>Contact</PageInner>
 }
 
 export default Contact

@@ -31,11 +31,13 @@ const App = () => {
 	const [content, moveContent] = useCycle(
 		{
 			x: DRAWER_WIDTH_CLOSED,
-			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
+			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`,
+			height: '100vh'
 		},
 		{
 			x: DRAWER_WIDTH_OPEN,
-			width: `calc(100vw - ${DRAWER_WIDTH_OPEN})`
+			width: `calc(100vw - ${DRAWER_WIDTH_OPEN})`,
+			height: '100vh'
 		}
 	)
 

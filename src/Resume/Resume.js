@@ -1,7 +1,8 @@
 import React from 'react'
+import PageInner from '../PageInner'
 
 const Resume = () => {
-	return <div style={{ backgroundColor: 'purple' }}>Resume</div>
+	return <PageInner>Resume</PageInner>
 }
 
 export default Resume

@@ -1,7 +1,8 @@
 import React from 'react'
+import PageInner from '../PageInner'
 
 const Projects = () => {
-	return <div style={{ backgroundColor: 'green' }}>Projects</div>
+	return <PageInner>Projects</PageInner>
 }
 
 export default Projects

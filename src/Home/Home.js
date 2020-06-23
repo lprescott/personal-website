@@ -1,7 +1,8 @@
 import React from 'react'
+import PageInner from '../PageInner'
 
 const Home = () => {
-	return <div style={{ backgroundColor: 'red' }}>Home</div>
+	return <PageInner>Home</PageInner>
 }
 
 export default Home
