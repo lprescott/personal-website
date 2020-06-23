@@ -3,11 +3,11 @@ import DescriptionRoundedIcon from '@material-ui/icons/DescriptionRounded'
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded'
 import PersonIcon from '@material-ui/icons/Person'
 import ChatIcon from '@material-ui/icons/Chat'
-import Home from '../Home/Home'
-import About from '../About/About'
-import Projects from '../Projects/Projects'
-import Resume from '../Resume/Resume'
-import Contact from '../Contact/Contact'
+import Home from '../pages/Home/Home'
+import About from '../pages/About/About'
+import Projects from '../pages/Projects/Projects'
+import Resume from '../pages/Resume/Resume'
+import Contact from '../pages/Contact/Contact'
 
 const routes = [
 	{

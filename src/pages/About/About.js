@@ -1,5 +1,5 @@
 import React from 'react'
-import PageInner from '../PageInner'
+import PageInner from '../../PageInner'
 
 const About = () => {
 	return <PageInner>About</PageInner>
