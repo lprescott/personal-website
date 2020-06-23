@@ -56,11 +56,6 @@ const SideDrawer = (props) => {
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 			width={null}
 			background={null}
-			style={{
-				borderBottomRightRadius: '1em',
-				borderTopRightRadius: '1em',
-				overflow: 'hidden'
-			}}
 		>
 			<Tabs
 				value={findRouteIndex(props.location.pathname)}
