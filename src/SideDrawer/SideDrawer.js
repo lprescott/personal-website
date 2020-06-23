@@ -13,6 +13,7 @@ import {
 	TAB_HEIGHT,
 	CHEVRON_HEIGHT,
 	DRAWER_PADDING,
+	DRAWER_WIDTH_OPEN,
 	DRAWER_WIDTH_CLOSED,
 	DRAWER_TRANSITION_LENGTH
 } from '../common/constants'
@@ -27,6 +28,8 @@ const useStyles = makeStyles({
 })
 
 const SideDrawer = (props) => {
+	const isOpen = props.drawer.width === DRAWER_WIDTH_OPEN
+
 	const classes = useStyles()
 
 	const getSideDrawerHeight = () => {
@@ -36,8 +39,8 @@ const SideDrawer = (props) => {
 
 	// Chevon animation
 	const [flip, cycleFlip] = useCycle(
-		{ scaleX: 1, x: 10 },
-		{ scaleX: -1, x: 120 }
+		{ scaleX: 1, x: 10, delay: 1 },
+		{ scaleX: -1, x: 120, delay: 1 }
 	)
 	const [fade, cycleFade] = useCycle(
 		{ x: 10, y: 442, opacity: 0 },
@@ -92,6 +95,7 @@ const SideDrawer = (props) => {
 					animate={fade}
 					background={null}
 					size={50}
+					transition={{ delay: isOpen ? 0 : 0.5 }}
 				>
 					<motion.div
 						whileHover={{ scale: 1.1 }}
@@ -121,7 +125,9 @@ const SideDrawer = (props) => {
 					size={50}
 					background={null}
 					bottom={5}
-					transition={{ duration: DRAWER_TRANSITION_LENGTH }}
+					transition={{
+						duration: DRAWER_TRANSITION_LENGTH
+					}}
 				>
 					<motion.div
 						whileHover={{ scale: 1.1 }}
@@ -129,9 +135,7 @@ const SideDrawer = (props) => {
 					>
 						<IconButton
 							aria-label={
-								props.drawer.width === DRAWER_WIDTH_CLOSED
-									? 'Open Drawer'
-									: 'Close Drawer'
+								!isOpen ? 'Open Drawer' : 'Close Drawer'
 							}
 						>
 							<ArrowForwardIosRoundedIcon classes={classes} />

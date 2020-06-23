@@ -35,7 +35,7 @@ const App = () => {
 		},
 		{
 			x: DRAWER_WIDTH_OPEN,
-			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
+			width: `calc(100vw - ${DRAWER_WIDTH_OPEN})`
 		}
 	)
 

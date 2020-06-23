@@ -1,6 +1,7 @@
 import { Frame } from 'framer'
 import PropTypes from 'prop-types'
 import React from 'react'
+import PageWrapper from './PageWrapper'
 import {
 	DRAWER_TRANSITION_LENGTH,
 	DRAWER_WIDTH_CLOSED
@@ -17,7 +18,7 @@ const Content = (props) => {
 			background={null}
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 		>
-			{props.children}
+			<PageWrapper>{props.children}</PageWrapper>
 		</Frame>
 	)
 }
