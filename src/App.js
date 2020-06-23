@@ -74,6 +74,8 @@ const App = () => {
 				drawer={drawer}
 				location={location}
 				setSlideTransition={setSlideTransition}
+				darkMode={darkMode}
+				setDarkMode={setDarkMode}
 				openDrawer={() => {
 					openDrawer()
 					moveContent()

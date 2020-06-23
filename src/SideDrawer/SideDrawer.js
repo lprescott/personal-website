@@ -17,6 +17,8 @@ import {
 	DRAWER_TRANSITION_LENGTH
 } from '../common/constants'
 import { motion } from 'framer-motion'
+import Brightness7Icon from '@material-ui/icons/Brightness7'
+import Brightness4Icon from '@material-ui/icons/Brightness4'
 
 const useStyles = makeStyles({
 	root: {
@@ -33,7 +35,14 @@ const SideDrawer = (props) => {
 	}
 
 	// Chevon animation
-	const [flip, cycle] = useCycle({ scaleX: 1, x: 10 }, { scaleX: -1, x: 120 })
+	const [flip, cycleFlip] = useCycle(
+		{ scaleX: 1, x: 10 },
+		{ scaleX: -1, x: 120 }
+	)
+	const [fade, cycleFade] = useCycle(
+		{ x: 10, y: 442, opacity: 0 },
+		{ x: 10, y: 442, opacity: 1 }
+	)
 
 	return (
 		<Frame
@@ -77,11 +86,36 @@ const SideDrawer = (props) => {
 					/>
 				))}
 
+				{/* Dark Mode Button */}
+				<Frame
+					initial={{ x: 10, y: 10, opacity: 0 }}
+					animate={fade}
+					background={null}
+					size={50}
+				>
+					<motion.div
+						whileHover={{ scale: 1.1 }}
+						whileTap={{ scale: 1 }}
+					>
+						<IconButton
+							onClick={() => props.setDarkMode(!props.darkMode)}
+						>
+							{props.darkMode ? (
+								<Brightness4Icon />
+							) : (
+								<Brightness7Icon />
+							)}
+						</IconButton>
+					</motion.div>
+				</Frame>
+
+				{/* Open Drawer Button */}
 				<Frame
 					initial={{ scaleX: 1, x: 10 }}
 					animate={flip}
 					onTap={() => {
-						cycle()
+						cycleFlip()
+						cycleFade()
 						props.openDrawer()
 					}}
 					size={50}
@@ -113,7 +147,9 @@ SideDrawer.propTypes = {
 	openDrawer: PropTypes.func.isRequired,
 	drawer: PropTypes.object.isRequired,
 	location: PropTypes.object.isRequired,
-	setSlideTransition: PropTypes.func.isRequired
+	setSlideTransition: PropTypes.func.isRequired,
+	darkMode: PropTypes.bool.isRequired,
+	setDarkMode: PropTypes.func.isRequired
 }
 
 export default SideDrawer
