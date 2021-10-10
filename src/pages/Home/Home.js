@@ -14,7 +14,7 @@ const Home = () => {
     }
  
     const draw = (p5) => {
-        p5.background(255)
+        p5.background('black') //#fafafa
         p5.ellipse(x, y, 70, 70)
         // NOTE: Do not use setState in the draw function or in functions that are executed
         // in the draw function...
