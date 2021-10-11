@@ -63,7 +63,8 @@ const SideDrawer = (props) => {
 
 	const getSideDrawerHeight = () => {
 		const tabCount = routes.length
-		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + DRAWER_PADDING
+		// The 1 is from the padding above the chevron and dark mode
+		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + 1
 	}
 
 	const [fadeDarkMode, cycleFadeDarkMode] = useCycle(
@@ -136,58 +137,23 @@ const SideDrawer = (props) => {
 						onClick={() => props.setSlideTransition(true)}
 					/>
 				))}
-
-				{/* Dark Mode Button */}
 				{!mobileDevice ? (
-					<Frame
-						initial={{ x: 10, y: 10, opacity: 0 }}
-						animate={fadeDarkMode}
-						background={null}
-						size={50}
-						transition={{ delay: isOpen ? 0 : 0.5 }}
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							minWidth: DRAWER_WIDTH_OPEN,
+							marginTop: '1em'
+						}}
 					>
-						<motion.div
-							whileHover={{ scale: 1.1 }}
-							whileTap={{ scale: 1 }}
-						>
-							<IconButton
-								onClick={() =>
-									props.setDarkMode(!props.darkMode)
-								}
-								size="large"
-								TouchRippleProps={{
-									sx: {
-										color: NICE_BLUE
-									}
-								}}
-							>
-								{props.darkMode ? (
-									<Brightness4Icon />
-								) : (
-									<Brightness7Icon />
-								)}
-							</IconButton>
-						</motion.div>
-					</Frame>
-				) : null}
-
-				{/* Expand/Retract Button */}
-				{!mobileDevice ? (
-					<Frame
-						size={50}
-						initial={{ x: 10, y: 500 }}
-						background={null}
-					>
-						<motion.div
-							whileHover={{ scale: 1.1 }}
-							whileTap={{ scale: 1 }}
-						>
+						{/* Expand/Retract Button */}
+						<div>
 							<IconButton
 								aria-label={
 									!isOpen ? 'Open Drawer' : 'Close Drawer'
 								}
 								TouchRippleProps={{
-									sx: {
+									style: {
 										color: NICE_BLUE
 									}
 								}}
@@ -207,8 +173,29 @@ const SideDrawer = (props) => {
 									/>
 								)}
 							</IconButton>
-						</motion.div>
-					</Frame>
+						</div>
+
+						{/* Dark Mode Button */}
+						<div>
+							<IconButton
+								onClick={() =>
+									props.setDarkMode(!props.darkMode)
+								}
+								size="large"
+								TouchRippleProps={{
+									style: {
+										color: NICE_BLUE
+									}
+								}}
+							>
+								{props.darkMode ? (
+									<Brightness4Icon />
+								) : (
+									<Brightness7Icon />
+								)}
+							</IconButton>
+						</div>
+					</div>
 				) : null}
 			</SideTabs>
 		</Frame>
