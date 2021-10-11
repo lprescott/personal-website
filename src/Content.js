@@ -2,19 +2,12 @@ import { Frame } from 'framer'
 import PropTypes from 'prop-types'
 import React from 'react'
 import PageWrapper from './PageWrapper'
-import {
-	DRAWER_TRANSITION_LENGTH,
-	DRAWER_WIDTH_CLOSED
-} from './common/constants'
+import { DRAWER_TRANSITION_LENGTH } from './common/constants'
 
 const Content = (props) => {
 	return (
 		<Frame
-			initial={{
-				x: DRAWER_WIDTH_CLOSED,
-				width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`
-			}}
-			animate={props.content}
+			initial={{ width: '100vw' }}
 			background={null}
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 		>

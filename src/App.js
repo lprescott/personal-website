@@ -11,7 +11,7 @@ import { Switch, Route, useLocation, withRouter } from 'react-router-dom'
 import { useCycle, AnimatePresence, motion } from 'framer-motion'
 import Content from './Content'
 import CssBaseline from '@mui/material/CssBaseline'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import routes from './nav/routes'
 import SideDrawer from './SideDrawer/SideDrawer'
 import { useMediaQuery } from '@mui/material'
@@ -21,7 +21,13 @@ const App = () => {
 	const previousIndex = findRouteIndex(location.state?.prevPath)
 	const currentIndex = findRouteIndex(location.pathname)
 
-	const onSmartphone = !useMediaQuery('(min-width:480px)')
+	const [onSmartphone, setOnSmartphone] = useState(false)
+
+	const onSmartphoneHook = !useMediaQuery('(min-width:480px)')
+
+	useEffect(() => {
+		setOnSmartphone(onSmartphoneHook)
+	}, [onSmartphoneHook])
 
 	// Theme
 	const [darkMode, setDarkMode] = useState(false)
@@ -37,19 +43,6 @@ const App = () => {
 	)
 
 	// Page shift animation
-	const [content, moveContent] = useCycle(
-		{
-			marginLeft: `-${DRAWER_WIDTH_CLOSED}`,
-			width: '100vw',
-			height: '100vh'
-		},
-		{
-			marginLeft: `-${DRAWER_WIDTH_CLOSED}`,
-			width: '100vw',
-			height: '100vh'
-		}
-	)
-
 	// Page slide animation
 	const [slideTransition, setSlideTransition] = React.useState(false)
 	const pageTransition = {
@@ -91,10 +84,9 @@ const App = () => {
 					setDarkMode={setDarkMode}
 					openDrawer={() => {
 						openDrawer()
-						moveContent()
 					}}
 				/>
-				<Content content={content} moveContent={moveContent}>
+				<Content>
 					<AnimatePresence exitBeforeEnter>
 						<Switch location={location} key={location.pathname}>
 							{routes.map((route) => {
@@ -117,6 +109,7 @@ const App = () => {
 											<CurrentComponent
 												setDarkMode={setDarkMode}
 												location={location}
+												onMobileDevice={onSmartphone}
 											/>
 										</motion.div>
 									</Route>

@@ -67,8 +67,8 @@ const SideDrawer = (props) => {
 	}
 
 	const [fadeDarkMode, cycleFadeDarkMode] = useCycle(
-		{ x: 140, y: 500, opacity: 0 },
-		{ x: 140, y: 500, opacity: 1 }
+		{ opacity: 0 },
+		{ opacity: 1 }
 	)
 
 	return (
@@ -97,7 +97,7 @@ const SideDrawer = (props) => {
 				className={classes.root}
 				variant={onSmartphone ? 'scrollable' : 'standard'}
 				TabIndicatorProps={{
-					style: !onSmartphone
+					sx: !onSmartphone
 						? {
 								width: '.3em',
 								backgroundColor: NICE_BLUE,
@@ -155,7 +155,7 @@ const SideDrawer = (props) => {
 									}
 									size="large"
 									TouchRippleProps={{
-										style: {
+										sx: {
 											color: NICE_BLUE
 										}
 									}}
@@ -184,7 +184,7 @@ const SideDrawer = (props) => {
 										!isOpen ? 'Open Drawer' : 'Close Drawer'
 									}
 									TouchRippleProps={{
-										style: {
+										sx: {
 											color: NICE_BLUE
 										}
 									}}

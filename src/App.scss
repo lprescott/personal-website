@@ -31,3 +31,8 @@ body,
 	align-items: center;
 	justify-content: space-around;
 }
+
+.mobile-PageInner {
+	margin-top: 50px;
+	height: calc(100% - 50px);
+}
