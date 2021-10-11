@@ -13,7 +13,7 @@ import Content from './Content'
 import CssBaseline from '@mui/material/CssBaseline'
 import React, { useEffect, useState } from 'react'
 import routes from './nav/routes'
-import SideDrawer from './SideDrawer/SideDrawer'
+import Drawer from './Drawer/Drawer'
 import { useMediaQuery } from '@mui/material'
 
 const App = () => {
@@ -106,16 +106,14 @@ const App = () => {
 		<StyledEngineProvider injectFirst>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
-				<SideDrawer
+				<Drawer
 					mobileDevice={mobileDevice}
 					drawer={drawer}
 					location={location}
 					setSlideTransition={setSlideTransition}
 					darkMode={darkMode}
 					setDarkMode={setDarkMode}
-					openDrawer={() => {
-						openDrawer()
-					}}
+					openDrawer={openDrawer}
 				/>
 				<Content>
 					<AnimatePresence exitBeforeEnter>

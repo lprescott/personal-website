@@ -1,10 +1,9 @@
-import './SideDrawer.scss'
+import './Drawer.scss'
 import { findRouteIndex } from '../common/helper'
 import { Frame } from 'framer'
 import { Link } from 'react-router-dom'
 import makeStyles from '@mui/styles/makeStyles'
 import { Tabs, Tab, IconButton } from '@mui/material'
-import { useCycle } from 'framer-motion'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 import PropTypes from 'prop-types'
@@ -13,13 +12,11 @@ import routes from '../nav/routes'
 import {
 	TAB_HEIGHT,
 	CHEVRON_HEIGHT,
-	DRAWER_PADDING,
 	DRAWER_WIDTH_OPEN,
 	DRAWER_WIDTH_CLOSED,
 	DRAWER_TRANSITION_LENGTH,
 	NICE_BLUE
 } from '../common/constants'
-import { motion } from 'framer-motion'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import { styled } from '@mui/material/styles'
@@ -30,7 +27,7 @@ const useStyles = makeStyles({
 	}
 })
 
-const SideDrawer = (props) => {
+const Drawer = (props) => {
 	const isOpen = props.drawer.width === DRAWER_WIDTH_OPEN
 
 	const { mobileDevice } = props
@@ -58,7 +55,8 @@ const SideDrawer = (props) => {
 		display: 'flex',
 		flexDirection: 'row',
 		padding: 'unset',
-		justifyContent: 'start'
+		justifyContent: 'start',
+		minWidth: DRAWER_WIDTH_CLOSED
 	}))
 
 	const getSideDrawerHeight = () => {
@@ -66,11 +64,6 @@ const SideDrawer = (props) => {
 		// The 1 is from the padding above the chevron and dark mode
 		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + 1
 	}
-
-	const [fadeDarkMode, cycleFadeDarkMode] = useCycle(
-		{ opacity: 0 },
-		{ opacity: 1 }
-	)
 
 	return (
 		<Frame
@@ -122,18 +115,7 @@ const SideDrawer = (props) => {
 								<route.icon fontSize="large" />
 							</div>
 						}
-						label={
-							!mobileDevice ? (
-								<span
-									style={{
-										minWidth: `calc(${DRAWER_WIDTH_OPEN} - ${DRAWER_WIDTH_CLOSED} + .3em)`,
-										textAlign: 'left'
-									}}
-								>
-									{route.label}
-								</span>
-							) : null
-						}
+						label={!mobileDevice ? route.label : null}
 						onClick={() => props.setSlideTransition(true)}
 					/>
 				))}
@@ -158,10 +140,7 @@ const SideDrawer = (props) => {
 									}
 								}}
 								size="large"
-								onClick={() => {
-									cycleFadeDarkMode()
-									props.openDrawer()
-								}}
+								onClick={() => props.openDrawer()}
 							>
 								{!isOpen ? (
 									<ArrowForwardIosRoundedIcon
@@ -202,7 +181,7 @@ const SideDrawer = (props) => {
 	)
 }
 
-SideDrawer.propTypes = {
+Drawer.propTypes = {
 	openDrawer: PropTypes.func.isRequired,
 	drawer: PropTypes.object.isRequired,
 	location: PropTypes.object.isRequired,
@@ -212,4 +191,4 @@ SideDrawer.propTypes = {
 	mobileDevice: PropTypes.bool.isRequired
 }
 
-export default SideDrawer
+export default Drawer

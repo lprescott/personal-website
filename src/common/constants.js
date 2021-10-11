@@ -1,4 +1,4 @@
-// SideDrawer
+// Drawer
 export const CHEVRON_HEIGHT = 3
 export const DRAWER_PADDING = 10
 export const DRAWER_TRANSITION_LENGTH = 0.5
