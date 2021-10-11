@@ -30,33 +30,36 @@ const useStyles = makeStyles({
 	}
 })
 
-const SideTabs = styled(Tabs)(() => ({
-	transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
-	height: '100%',
-	backgroundColor: 'rgb(28, 28, 28)',
-	borderBottomRightRadius: '1em',
-	borderTopRightRadius: '1em',
-	boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-	'&:hover': {
-		boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
-	}
-}))
-
-const SideTab = styled(Tab)(() => ({
-	'&.Mui-selected': {
-		color: NICE_BLUE
-	},
-	color: 'grey',
-	display: 'flex',
-	flexDirection: 'row',
-	padding: 'unset',
-	justifyContent: 'start'
-}))
-
 const SideDrawer = (props) => {
 	const isOpen = props.drawer.width === DRAWER_WIDTH_OPEN
 
+	const { onSmartphone } = props
+
 	const classes = useStyles()
+
+	const SideTabs = styled(Tabs)(() => ({
+		transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
+		height: '100%',
+		backgroundColor: 'rgb(28, 28, 28)',
+		borderBottomRightRadius: onSmartphone ? 0 : '1em',
+		borderTopRightRadius: onSmartphone ? 0 : '1em',
+		boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+		'&:hover': {
+			boxShadow:
+				'0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+		}
+	}))
+
+	const SideTab = styled(Tab)(() => ({
+		'&.Mui-selected': {
+			color: NICE_BLUE
+		},
+		color: 'grey',
+		display: 'flex',
+		flexDirection: 'row',
+		padding: 'unset',
+		justifyContent: 'start'
+	}))
 
 	const getSideDrawerHeight = () => {
 		const tabCount = routes.length
@@ -70,26 +73,37 @@ const SideDrawer = (props) => {
 
 	return (
 		<Frame
-			initial={{ width: DRAWER_WIDTH_CLOSED }}
+			id="side-drawer-frame"
+			initial={
+				!onSmartphone
+					? { width: DRAWER_WIDTH_CLOSED }
+					: { width: '100vw' }
+			}
 			animate={props.drawer}
-			height={`${getSideDrawerHeight()}em`}
-			top={`calc(50vh - ${getSideDrawerHeight() / 2}em)`}
+			height={onSmartphone ? 50 : `${getSideDrawerHeight()}em`}
+			top={
+				onSmartphone ? 0 : `calc(50vh - ${getSideDrawerHeight() / 2}em)`
+			}
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 			width={null}
 			background={null}
 			style={{ zIndex: 1 }}
 		>
 			<SideTabs
+				id="side-drawer"
 				value={findRouteIndex(props.location.pathname)}
 				aria-label="Vertical Routable Tabs"
-				orientation="vertical"
+				orientation={onSmartphone ? 'horizontal' : 'vertical'}
 				className={classes.root}
+				variant={onSmartphone ? 'scrollable' : 'standard'}
 				TabIndicatorProps={{
-					style: {
-						width: '.3em',
-						backgroundColor: NICE_BLUE,
-						left: '0'
-					}
+					style: !onSmartphone
+						? {
+								width: '.3em',
+								backgroundColor: NICE_BLUE,
+								left: '0'
+						  }
+						: { backgroundColor: NICE_BLUE }
 				}}
 			>
 				{routes.map((route) => (
@@ -106,68 +120,94 @@ const SideDrawer = (props) => {
 							</div>
 						}
 						label={
-							<span
-								style={{
-									minWidth: `calc(${DRAWER_WIDTH_OPEN} - ${DRAWER_WIDTH_CLOSED} + .3em)`,
-									textAlign: 'left'
-								}}
-							>
-								{route.label}
-							</span>
+							!onSmartphone ? (
+								<span
+									style={{
+										minWidth: `calc(${DRAWER_WIDTH_OPEN} - ${DRAWER_WIDTH_CLOSED} + .3em)`,
+										textAlign: 'left'
+									}}
+								>
+									{route.label}
+								</span>
+							) : null
 						}
 						onClick={() => props.setSlideTransition(true)}
 					/>
 				))}
 
-				{/* Dark Mode Button */}
-				<Frame
-					initial={{ x: 10, y: 10, opacity: 0 }}
-					animate={fadeDarkMode}
-					background={null}
-					size={50}
-					transition={{ delay: isOpen ? 0 : 0.5 }}
-				>
-					<motion.div
-						whileHover={{ scale: 1.1 }}
-						whileTap={{ scale: 1 }}
-					>
-						<IconButton
-							onClick={() => props.setDarkMode(!props.darkMode)}
-							size="large"
+				{!onSmartphone ? (
+					<>
+						{/* Dark Mode Button */}
+						<Frame
+							initial={{ x: 10, y: 10, opacity: 0 }}
+							animate={fadeDarkMode}
+							background={null}
+							size={50}
+							transition={{ delay: isOpen ? 0 : 0.5 }}
 						>
-							{props.darkMode ? (
-								<Brightness4Icon />
-							) : (
-								<Brightness7Icon />
-							)}
-						</IconButton>
-					</motion.div>
-				</Frame>
+							<motion.div
+								whileHover={{ scale: 1.1 }}
+								whileTap={{ scale: 1 }}
+							>
+								<IconButton
+									onClick={() =>
+										props.setDarkMode(!props.darkMode)
+									}
+									size="large"
+									TouchRippleProps={{
+										style: {
+											color: NICE_BLUE
+										}
+									}}
+								>
+									{props.darkMode ? (
+										<Brightness4Icon />
+									) : (
+										<Brightness7Icon />
+									)}
+								</IconButton>
+							</motion.div>
+						</Frame>
 
-				{/* Expand/Retract Button */}
-				<Frame size={50} initial={{ x: 10, y: 500 }} background={null}>
-					<motion.div
-						whileHover={{ scale: 1.1 }}
-						whileTap={{ scale: 1 }}
-					>
-						<IconButton
-							aria-label={
-								!isOpen ? 'Open Drawer' : 'Close Drawer'
-							}
-							size="large"
-							onClick={() => {
-								cycleFadeDarkMode()
-								props.openDrawer()
-							}}
+						{/* Expand/Retract Button */}
+						<Frame
+							size={50}
+							initial={{ x: 10, y: 500 }}
+							background={null}
 						>
-							{!isOpen ? (
-								<ArrowForwardIosRoundedIcon classes={classes} />
-							) : (
-								<ArrowBackIosRoundedIcon classes={classes} />
-							)}
-						</IconButton>
-					</motion.div>
-				</Frame>
+							<motion.div
+								whileHover={{ scale: 1.1 }}
+								whileTap={{ scale: 1 }}
+							>
+								<IconButton
+									aria-label={
+										!isOpen ? 'Open Drawer' : 'Close Drawer'
+									}
+									TouchRippleProps={{
+										style: {
+											color: NICE_BLUE
+										}
+									}}
+									size="large"
+									onClick={() => {
+										cycleFadeDarkMode()
+										props.openDrawer()
+									}}
+								>
+									{!isOpen ? (
+										<ArrowForwardIosRoundedIcon
+											classes={classes}
+										/>
+									) : (
+										<ArrowBackIosRoundedIcon
+											classes={classes}
+										/>
+									)}
+								</IconButton>
+							</motion.div>
+						</Frame>
+					</>
+				) : null}
 			</SideTabs>
 		</Frame>
 	)
@@ -179,7 +219,8 @@ SideDrawer.propTypes = {
 	location: PropTypes.object.isRequired,
 	setSlideTransition: PropTypes.func.isRequired,
 	darkMode: PropTypes.bool.isRequired,
-	setDarkMode: PropTypes.func.isRequired
+	setDarkMode: PropTypes.func.isRequired,
+	onSmartphone: PropTypes.bool.isRequired
 }
 
 export default SideDrawer

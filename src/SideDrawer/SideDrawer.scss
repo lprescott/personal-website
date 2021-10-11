@@ -6,3 +6,9 @@ div.MuiTabs-root {
 		color: white;
 	}
 }
+
+@media (max-width: 481px) {
+	div#side-drawer-frame {
+		width: 100vw !important;
+	}
+}

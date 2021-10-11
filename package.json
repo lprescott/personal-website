@@ -43,6 +43,7 @@
 		]
 	},
 	"devDependencies": {
+		"eslint-plugin-react": "^7.26.1",
 		"yarn-upgrade-all": "^0.5.4"
 	}
 }

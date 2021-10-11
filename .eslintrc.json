@@ -20,7 +20,9 @@
 	"rules": {
 		"linebreak-style": ["error", "windows"],
 		"quotes": ["error", "single"],
-		"semi": ["error", "never"]
+		"semi": ["error", "never"],
+		"no-unused-vars": "warn",
+		"no-mixed-spaces-and-tabs": "off"
 	},
 	"overrides": [
 		{

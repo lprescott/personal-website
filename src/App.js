@@ -14,16 +14,21 @@ import CssBaseline from '@mui/material/CssBaseline'
 import React, { useState } from 'react'
 import routes from './nav/routes'
 import SideDrawer from './SideDrawer/SideDrawer'
+import { useMediaQuery } from '@mui/material'
 
 const App = () => {
 	const location = useLocation()
 	const previousIndex = findRouteIndex(location.state?.prevPath)
 	const currentIndex = findRouteIndex(location.pathname)
 
+	const onSmartphone = !useMediaQuery('(min-width:480px)')
+
 	// Theme
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
 	const theme = createTheme(currentTheme)
+
+	console.log(onSmartphone)
 
 	// Drawer animation
 	const [drawer, openDrawer] = useCycle(
@@ -78,6 +83,7 @@ const App = () => {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<SideDrawer
+					onSmartphone={onSmartphone}
 					drawer={drawer}
 					location={location}
 					setSlideTransition={setSlideTransition}
