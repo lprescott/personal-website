@@ -34,13 +34,13 @@ const App = () => {
 	// Page shift animation
 	const [content, moveContent] = useCycle(
 		{
-			x: DRAWER_WIDTH_CLOSED,
-			width: `calc(100vw - ${DRAWER_WIDTH_CLOSED})`,
+			marginLeft: `-${DRAWER_WIDTH_CLOSED}`,
+			width: '100vw',
 			height: '100vh'
 		},
 		{
-			x: DRAWER_WIDTH_OPEN,
-			width: `calc(100vw - ${DRAWER_WIDTH_OPEN})`,
+			marginLeft: `-${DRAWER_WIDTH_CLOSED}`,
+			width: '100vw',
 			height: '100vh'
 		}
 	)

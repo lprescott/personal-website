@@ -6,6 +6,7 @@ import makeStyles from '@mui/styles/makeStyles'
 import { Tabs, Tab, IconButton } from '@mui/material'
 import { useCycle } from 'framer-motion'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 import PropTypes from 'prop-types'
 import React from 'react'
 import routes from '../nav/routes'
@@ -62,14 +63,9 @@ const SideDrawer = (props) => {
 		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + DRAWER_PADDING
 	}
 
-	// Chevron animation
-	const [flip, cycleFlip] = useCycle(
-		{ scaleX: 1, x: 10, delay: 1 },
-		{ scaleX: -1, x: 120, delay: 1 }
-	)
-	const [fade, cycleFade] = useCycle(
-		{ x: 10, y: 442, opacity: 0 },
-		{ x: 10, y: 442, opacity: 1 }
+	const [fadeDarkMode, cycleFadeDarkMode] = useCycle(
+		{ x: 140, y: 500, opacity: 0 },
+		{ x: 140, y: 500, opacity: 1 }
 	)
 
 	return (
@@ -81,6 +77,7 @@ const SideDrawer = (props) => {
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 			width={null}
 			background={null}
+			style={{ zIndex: 1 }}
 		>
 			<SideTabs
 				value={findRouteIndex(props.location.pathname)}
@@ -104,7 +101,7 @@ const SideDrawer = (props) => {
 						}}
 						component={Link}
 						icon={
-							<div style={{ minWidth: '6em' }}>
+							<div style={{ minWidth: '6em', marginBottom: 0 }}>
 								<route.icon fontSize="large" />
 							</div>
 						}
@@ -125,7 +122,7 @@ const SideDrawer = (props) => {
 				{/* Dark Mode Button */}
 				<Frame
 					initial={{ x: 10, y: 10, opacity: 0 }}
-					animate={fade}
+					animate={fadeDarkMode}
 					background={null}
 					size={50}
 					transition={{ delay: isOpen ? 0 : 0.5 }}
@@ -147,22 +144,8 @@ const SideDrawer = (props) => {
 					</motion.div>
 				</Frame>
 
-				{/* Open Drawer Button */}
-				<Frame
-					initial={{ scaleX: 1, x: 10 }}
-					animate={flip}
-					onTap={() => {
-						cycleFlip()
-						cycleFade()
-						props.openDrawer()
-					}}
-					size={50}
-					background={null}
-					bottom={5}
-					transition={{
-						duration: DRAWER_TRANSITION_LENGTH
-					}}
-				>
+				{/* Expand/Retract Button */}
+				<Frame size={50} initial={{ x: 10, y: 500 }} background={null}>
 					<motion.div
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 1 }}
@@ -172,8 +155,16 @@ const SideDrawer = (props) => {
 								!isOpen ? 'Open Drawer' : 'Close Drawer'
 							}
 							size="large"
+							onClick={() => {
+								cycleFadeDarkMode()
+								props.openDrawer()
+							}}
 						>
-							<ArrowForwardIosRoundedIcon classes={classes} />
+							{!isOpen ? (
+								<ArrowForwardIosRoundedIcon classes={classes} />
+							) : (
+								<ArrowBackIosRoundedIcon classes={classes} />
+							)}
 						</IconButton>
 					</motion.div>
 				</Frame>
