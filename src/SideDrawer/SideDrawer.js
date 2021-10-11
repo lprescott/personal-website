@@ -15,17 +15,42 @@ import {
 	DRAWER_PADDING,
 	DRAWER_WIDTH_OPEN,
 	DRAWER_WIDTH_CLOSED,
-	DRAWER_TRANSITION_LENGTH
+	DRAWER_TRANSITION_LENGTH,
+	NICE_BLUE
 } from '../common/constants'
 import { motion } from 'framer-motion'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import Brightness4Icon from '@mui/icons-material/Brightness4'
+import { styled } from '@mui/material/styles'
 
 const useStyles = makeStyles({
 	root: {
 		color: 'white'
 	}
 })
+
+const SideTabs = styled(Tabs)(() => ({
+	transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
+	height: '100%',
+	backgroundColor: 'rgb(28, 28, 28)',
+	borderBottomRightRadius: '1em',
+	borderTopRightRadius: '1em',
+	boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+	'&:hover': {
+		boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
+	}
+}))
+
+const SideTab = styled(Tab)(() => ({
+	'&.Mui-selected': {
+		color: NICE_BLUE
+	},
+	color: 'grey',
+	display: 'flex',
+	flexDirection: 'row',
+	padding: 'unset',
+	justifyContent: 'start'
+}))
 
 const SideDrawer = (props) => {
 	const isOpen = props.drawer.width === DRAWER_WIDTH_OPEN
@@ -37,7 +62,7 @@ const SideDrawer = (props) => {
 		return tabCount * TAB_HEIGHT + CHEVRON_HEIGHT + DRAWER_PADDING
 	}
 
-	// Chevon animation
+	// Chevron animation
 	const [flip, cycleFlip] = useCycle(
 		{ scaleX: 1, x: 10, delay: 1 },
 		{ scaleX: -1, x: 120, delay: 1 }
@@ -57,7 +82,7 @@ const SideDrawer = (props) => {
 			width={null}
 			background={null}
 		>
-			<Tabs
+			<SideTabs
 				value={findRouteIndex(props.location.pathname)}
 				aria-label="Vertical Routable Tabs"
 				orientation="vertical"
@@ -65,21 +90,34 @@ const SideDrawer = (props) => {
 				TabIndicatorProps={{
 					style: {
 						width: '.3em',
-						backgroundColor: '#97E9EF',
+						backgroundColor: NICE_BLUE,
 						left: '0'
 					}
 				}}
 			>
 				{routes.map((route) => (
-					<Tab
+					<SideTab
 						key={route.label + '-route'}
 						to={{
 							pathname: route.to,
 							state: { prevPath: props.location.pathname }
 						}}
 						component={Link}
-						icon={<route.icon fontSize="large" />}
-						label={route.label}
+						icon={
+							<div style={{ minWidth: '6em' }}>
+								<route.icon fontSize="large" />
+							</div>
+						}
+						label={
+							<span
+								style={{
+									minWidth: `calc(${DRAWER_WIDTH_OPEN} - ${DRAWER_WIDTH_CLOSED} + .3em)`,
+									textAlign: 'left'
+								}}
+							>
+								{route.label}
+							</span>
+						}
 						onClick={() => props.setSlideTransition(true)}
 					/>
 				))}
@@ -139,7 +177,7 @@ const SideDrawer = (props) => {
 						</IconButton>
 					</motion.div>
 				</Frame>
-			</Tabs>
+			</SideTabs>
 		</Frame>
 	)
 }
