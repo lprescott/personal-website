@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 const SideDrawer = (props) => {
 	const isOpen = props.drawer.width === DRAWER_WIDTH_OPEN
 
-	const { onSmartphone } = props
+	const { mobileDevice } = props
 
 	const classes = useStyles()
 
@@ -41,8 +41,8 @@ const SideDrawer = (props) => {
 		transition: 'all 0.3s cubic-bezier(.25,.8,.25,1)',
 		height: '100%',
 		backgroundColor: 'rgb(28, 28, 28)',
-		borderBottomRightRadius: onSmartphone ? 0 : '1em',
-		borderTopRightRadius: onSmartphone ? 0 : '1em',
+		borderBottomRightRadius: mobileDevice ? 0 : '1em',
+		borderTopRightRadius: mobileDevice ? 0 : '1em',
 		boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
 		'&:hover': {
 			boxShadow:
@@ -75,14 +75,14 @@ const SideDrawer = (props) => {
 		<Frame
 			id="side-drawer-frame"
 			initial={
-				!onSmartphone
+				!mobileDevice
 					? { width: DRAWER_WIDTH_CLOSED }
 					: { width: '100vw' }
 			}
 			animate={props.drawer}
-			height={onSmartphone ? 50 : `${getSideDrawerHeight()}em`}
+			height={mobileDevice ? 50 : `${getSideDrawerHeight()}em`}
 			top={
-				onSmartphone ? 0 : `calc(50vh - ${getSideDrawerHeight() / 2}em)`
+				mobileDevice ? 0 : `calc(50vh - ${getSideDrawerHeight() / 2}em)`
 			}
 			transition={{ duration: DRAWER_TRANSITION_LENGTH }}
 			width={null}
@@ -93,11 +93,11 @@ const SideDrawer = (props) => {
 				id="side-drawer"
 				value={findRouteIndex(props.location.pathname)}
 				aria-label="Vertical Routable Tabs"
-				orientation={onSmartphone ? 'horizontal' : 'vertical'}
+				orientation={mobileDevice ? 'horizontal' : 'vertical'}
 				className={classes.root}
-				variant={onSmartphone ? 'scrollable' : 'standard'}
+				variant={mobileDevice ? 'scrollable' : 'standard'}
 				TabIndicatorProps={{
-					sx: !onSmartphone
+					sx: !mobileDevice
 						? {
 								width: '.3em',
 								backgroundColor: NICE_BLUE,
@@ -120,7 +120,7 @@ const SideDrawer = (props) => {
 							</div>
 						}
 						label={
-							!onSmartphone ? (
+							!mobileDevice ? (
 								<span
 									style={{
 										minWidth: `calc(${DRAWER_WIDTH_OPEN} - ${DRAWER_WIDTH_CLOSED} + .3em)`,
@@ -135,7 +135,7 @@ const SideDrawer = (props) => {
 					/>
 				))}
 
-				{!onSmartphone ? (
+				{!mobileDevice ? (
 					<>
 						{/* Dark Mode Button */}
 						<Frame
@@ -220,7 +220,7 @@ SideDrawer.propTypes = {
 	setSlideTransition: PropTypes.func.isRequired,
 	darkMode: PropTypes.bool.isRequired,
 	setDarkMode: PropTypes.func.isRequired,
-	onSmartphone: PropTypes.bool.isRequired
+	mobileDevice: PropTypes.bool.isRequired
 }
 
 export default SideDrawer

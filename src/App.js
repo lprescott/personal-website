@@ -21,20 +21,18 @@ const App = () => {
 	const previousIndex = findRouteIndex(location.state?.prevPath)
 	const currentIndex = findRouteIndex(location.pathname)
 
-	const [onSmartphone, setOnSmartphone] = useState(false)
+	const [mobileDevice, setMobileDevice] = useState(false)
 
-	const onSmartphoneHook = !useMediaQuery('(min-width:480px)')
+	const onMobileDeviceHook = !useMediaQuery('(min-width:480px)')
 
 	useEffect(() => {
-		setOnSmartphone(onSmartphoneHook)
-	}, [onSmartphoneHook])
+		setMobileDevice(onMobileDeviceHook)
+	}, [onMobileDeviceHook])
 
 	// Theme
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
 	const theme = createTheme(currentTheme)
-
-	console.log(onSmartphone)
 
 	// Drawer animation
 	const [drawer, openDrawer] = useCycle(
@@ -76,7 +74,7 @@ const App = () => {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<SideDrawer
-					onSmartphone={onSmartphone}
+					mobileDevice={mobileDevice}
 					drawer={drawer}
 					location={location}
 					setSlideTransition={setSlideTransition}
@@ -109,7 +107,7 @@ const App = () => {
 											<CurrentComponent
 												setDarkMode={setDarkMode}
 												location={location}
-												onMobileDevice={onSmartphone}
+												onMobileDevice={mobileDevice}
 											/>
 										</motion.div>
 									</Route>
