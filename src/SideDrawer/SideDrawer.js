@@ -48,7 +48,7 @@ const SideDrawer = (props) => {
 	)
 
 	return (
-        <Frame
+		<Frame
 			initial={{ width: DRAWER_WIDTH_CLOSED }}
 			animate={props.drawer}
 			height={`${getSideDrawerHeight()}em`}
@@ -96,7 +96,10 @@ const SideDrawer = (props) => {
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 1 }}
 					>
-						<IconButton onClick={() => props.setDarkMode(!props.darkMode)} size="large">
+						<IconButton
+							onClick={() => props.setDarkMode(!props.darkMode)}
+							size="large"
+						>
 							{props.darkMode ? (
 								<Brightness4Icon />
 							) : (
@@ -127,17 +130,18 @@ const SideDrawer = (props) => {
 						whileTap={{ scale: 1 }}
 					>
 						<IconButton
-                            aria-label={
+							aria-label={
 								!isOpen ? 'Open Drawer' : 'Close Drawer'
 							}
-                            size="large">
+							size="large"
+						>
 							<ArrowForwardIosRoundedIcon classes={classes} />
 						</IconButton>
 					</motion.div>
 				</Frame>
 			</Tabs>
 		</Frame>
-    )
+	)
 }
 
 SideDrawer.propTypes = {

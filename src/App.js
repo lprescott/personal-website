@@ -1,5 +1,9 @@
 import './App.scss'
-import { createTheme, ThemeProvider, StyledEngineProvider, adaptV4Theme } from '@mui/material/styles'
+import {
+	createTheme,
+	ThemeProvider,
+	StyledEngineProvider
+} from '@mui/material/styles'
 import { darkTheme, lightTheme } from './common/styles/themes'
 import { DRAWER_WIDTH_CLOSED, DRAWER_WIDTH_OPEN } from './common/constants'
 import { findRouteIndex } from './common/helper'
@@ -19,7 +23,7 @@ const App = () => {
 	// Theme
 	const [darkMode, setDarkMode] = useState(false)
 	const currentTheme = darkMode ? darkTheme : lightTheme
-	const theme = createTheme(adaptV4Theme(currentTheme))
+	const theme = createTheme(currentTheme)
 
 	// Drawer animation
 	const [drawer, openDrawer] = useCycle(
@@ -70,58 +74,58 @@ const App = () => {
 	}
 
 	return (
-        <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <SideDrawer
-                    drawer={drawer}
-                    location={location}
-                    setSlideTransition={setSlideTransition}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                    openDrawer={() => {
-                        openDrawer()
-                        moveContent()
-                    }}
-                />
-                <Content content={content} moveContent={moveContent}>
-                    <AnimatePresence exitBeforeEnter>
-                        <Switch location={location} key={location.pathname}>
-                            {routes.map((route) => {
-                                const CurrentComponent = route.component
+		<StyledEngineProvider injectFirst>
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<SideDrawer
+					drawer={drawer}
+					location={location}
+					setSlideTransition={setSlideTransition}
+					darkMode={darkMode}
+					setDarkMode={setDarkMode}
+					openDrawer={() => {
+						openDrawer()
+						moveContent()
+					}}
+				/>
+				<Content content={content} moveContent={moveContent}>
+					<AnimatePresence exitBeforeEnter>
+						<Switch location={location} key={location.pathname}>
+							{routes.map((route) => {
+								const CurrentComponent = route.component
 
-                                return (
-                                    <Route
-                                        key={route.label + '-route'}
-                                        exact
-                                        path={route.path}
-                                    >
-                                        <motion.div
-                                            exit="out"
-                                            animate="in"
-                                            initial="initial"
-                                            variants={pageTransition}
-                                            style={{ height: '100vh' }}
-                                            transition={{ type: 'tween' }}
-                                        >
-                                            <CurrentComponent
-                                                setDarkMode={setDarkMode}
-                                                location={location}
-                                            />
-                                        </motion.div>
-                                    </Route>
-                                )
-                            })}
+								return (
+									<Route
+										key={route.label + '-route'}
+										exact
+										path={route.path}
+									>
+										<motion.div
+											exit="out"
+											animate="in"
+											initial="initial"
+											variants={pageTransition}
+											style={{ height: '100vh' }}
+											transition={{ type: 'tween' }}
+										>
+											<CurrentComponent
+												setDarkMode={setDarkMode}
+												location={location}
+											/>
+										</motion.div>
+									</Route>
+								)
+							})}
 
-                            <Route>
-                                <a href="/home">Oh no!</a>
-                            </Route>
-                        </Switch>
-                    </AnimatePresence>
-                </Content>
-            </ThemeProvider>
-        </StyledEngineProvider>
-    )
+							<Route>
+								<a href="/home">Oh no!</a>
+							</Route>
+						</Switch>
+					</AnimatePresence>
+				</Content>
+			</ThemeProvider>
+		</StyledEngineProvider>
+	)
 }
 
 export default withRouter(App)
