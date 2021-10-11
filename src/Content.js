@@ -17,7 +17,6 @@ const Content = (props) => {
 }
 
 Content.propTypes = {
-	content: PropTypes.object.isRequired,
 	children: PropTypes.node.isRequired
 }
 

@@ -96,6 +96,8 @@ const SideDrawer = (props) => {
 				orientation={mobileDevice ? 'horizontal' : 'vertical'}
 				className={classes.root}
 				variant={mobileDevice ? 'scrollable' : 'standard'}
+				allowScrollButtonsMobile
+				scrollButtons={mobileDevice}
 				TabIndicatorProps={{
 					sx: !mobileDevice
 						? {
@@ -135,78 +137,78 @@ const SideDrawer = (props) => {
 					/>
 				))}
 
+				{/* Dark Mode Button */}
 				{!mobileDevice ? (
-					<>
-						{/* Dark Mode Button */}
-						<Frame
-							initial={{ x: 10, y: 10, opacity: 0 }}
-							animate={fadeDarkMode}
-							background={null}
-							size={50}
-							transition={{ delay: isOpen ? 0 : 0.5 }}
+					<Frame
+						initial={{ x: 10, y: 10, opacity: 0 }}
+						animate={fadeDarkMode}
+						background={null}
+						size={50}
+						transition={{ delay: isOpen ? 0 : 0.5 }}
+					>
+						<motion.div
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 1 }}
 						>
-							<motion.div
-								whileHover={{ scale: 1.1 }}
-								whileTap={{ scale: 1 }}
-							>
-								<IconButton
-									onClick={() =>
-										props.setDarkMode(!props.darkMode)
+							<IconButton
+								onClick={() =>
+									props.setDarkMode(!props.darkMode)
+								}
+								size="large"
+								TouchRippleProps={{
+									sx: {
+										color: NICE_BLUE
 									}
-									size="large"
-									TouchRippleProps={{
-										sx: {
-											color: NICE_BLUE
-										}
-									}}
-								>
-									{props.darkMode ? (
-										<Brightness4Icon />
-									) : (
-										<Brightness7Icon />
-									)}
-								</IconButton>
-							</motion.div>
-						</Frame>
+								}}
+							>
+								{props.darkMode ? (
+									<Brightness4Icon />
+								) : (
+									<Brightness7Icon />
+								)}
+							</IconButton>
+						</motion.div>
+					</Frame>
+				) : null}
 
-						{/* Expand/Retract Button */}
-						<Frame
-							size={50}
-							initial={{ x: 10, y: 500 }}
-							background={null}
+				{/* Expand/Retract Button */}
+				{!mobileDevice ? (
+					<Frame
+						size={50}
+						initial={{ x: 10, y: 500 }}
+						background={null}
+					>
+						<motion.div
+							whileHover={{ scale: 1.1 }}
+							whileTap={{ scale: 1 }}
 						>
-							<motion.div
-								whileHover={{ scale: 1.1 }}
-								whileTap={{ scale: 1 }}
-							>
-								<IconButton
-									aria-label={
-										!isOpen ? 'Open Drawer' : 'Close Drawer'
+							<IconButton
+								aria-label={
+									!isOpen ? 'Open Drawer' : 'Close Drawer'
+								}
+								TouchRippleProps={{
+									sx: {
+										color: NICE_BLUE
 									}
-									TouchRippleProps={{
-										sx: {
-											color: NICE_BLUE
-										}
-									}}
-									size="large"
-									onClick={() => {
-										cycleFadeDarkMode()
-										props.openDrawer()
-									}}
-								>
-									{!isOpen ? (
-										<ArrowForwardIosRoundedIcon
-											classes={classes}
-										/>
-									) : (
-										<ArrowBackIosRoundedIcon
-											classes={classes}
-										/>
-									)}
-								</IconButton>
-							</motion.div>
-						</Frame>
-					</>
+								}}
+								size="large"
+								onClick={() => {
+									cycleFadeDarkMode()
+									props.openDrawer()
+								}}
+							>
+								{!isOpen ? (
+									<ArrowForwardIosRoundedIcon
+										classes={classes}
+									/>
+								) : (
+									<ArrowBackIosRoundedIcon
+										classes={classes}
+									/>
+								)}
+							</IconButton>
+						</motion.div>
+					</Frame>
 				) : null}
 			</SideTabs>
 		</Frame>

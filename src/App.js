@@ -40,13 +40,38 @@ const App = () => {
 		{ width: DRAWER_WIDTH_OPEN }
 	)
 
-	// Page shift animation
 	// Page slide animation
 	const [slideTransition, setSlideTransition] = React.useState(false)
+
+	const inObj = mobileDevice ? { x: 0 } : { y: 0 }
+
+	const outObj = (nextIndex) =>
+		mobileDevice
+			? {
+					x: currentIndex < nextIndex ? '-100vw' : '100vw'
+			  }
+			: {
+					y: currentIndex < nextIndex ? '-100vh' : '100vh'
+			  }
+
+	const initialObj = mobileDevice
+		? {
+				x: !slideTransition
+					? 0
+					: previousIndex > currentIndex
+					? '-100vw'
+					: '100vw'
+		  }
+		: {
+				y: !slideTransition
+					? 0
+					: previousIndex > currentIndex
+					? '-100vh'
+					: '100vh'
+		  }
+
 	const pageTransition = {
-		in: {
-			y: 0
-		},
+		in: inObj,
 		out: () => {
 			/* 
 				This is tricky, so a note here:  
@@ -56,18 +81,26 @@ const App = () => {
 			*/
 			const nextIndex = findRouteIndex(window.location.pathname)
 
-			return {
-				y: currentIndex < nextIndex ? '-100vh' : '100vh'
-			}
+			return outObj(nextIndex)
 		},
-		initial: {
-			y: !slideTransition
-				? 0
-				: previousIndex > currentIndex
-				? '-100vh'
-				: '100vh'
-		}
+		initial: initialObj
 	}
+
+	// Welcome message
+	let msg = '%c Hi 👋! Welcome to my site!'
+	let styles = [
+		'font-size: 12px',
+		'font-family: monospace',
+		'background: white',
+		'display: inline-block',
+		'color: black',
+		'padding: 8px 19px',
+		'border: 1px dashed;'
+	].join(';')
+
+	useEffect(() => {
+		console.log(msg, styles)
+	}, [])
 
 	return (
 		<StyledEngineProvider injectFirst>
