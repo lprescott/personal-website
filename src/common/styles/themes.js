@@ -1,4 +1,4 @@
-import { blue, grey } from '@material-ui/core/colors/blue'
+import { grey, blue } from '@mui/material/colors'
 
 const common = {
 	palette: {
@@ -40,13 +40,13 @@ const common = {
 export const lightTheme = {
 	...common,
 	palette: {
-		type: 'light'
+		mode: 'light'
 	}
 }
 
 export const darkTheme = {
 	...common,
 	palette: {
-		type: 'dark'
+		mode: 'dark'
 	}
 }

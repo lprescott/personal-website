@@ -2,10 +2,10 @@ import './SideDrawer.scss'
 import { findRouteIndex } from '../common/helper'
 import { Frame } from 'framer'
 import { Link } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
-import { Tabs, Tab, IconButton } from '@material-ui/core'
+import makeStyles from '@mui/styles/makeStyles'
+import { Tabs, Tab, IconButton } from '@mui/material'
 import { useCycle } from 'framer-motion'
-import ArrowForwardIosRoundedIcon from '@material-ui/icons/ArrowForwardIosRounded'
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import PropTypes from 'prop-types'
 import React from 'react'
 import routes from '../nav/routes'
@@ -18,8 +18,8 @@ import {
 	DRAWER_TRANSITION_LENGTH
 } from '../common/constants'
 import { motion } from 'framer-motion'
-import Brightness7Icon from '@material-ui/icons/Brightness7'
-import Brightness4Icon from '@material-ui/icons/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
 
 const useStyles = makeStyles({
 	root: {
@@ -48,7 +48,7 @@ const SideDrawer = (props) => {
 	)
 
 	return (
-		<Frame
+        <Frame
 			initial={{ width: DRAWER_WIDTH_CLOSED }}
 			animate={props.drawer}
 			height={`${getSideDrawerHeight()}em`}
@@ -96,9 +96,7 @@ const SideDrawer = (props) => {
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 1 }}
 					>
-						<IconButton
-							onClick={() => props.setDarkMode(!props.darkMode)}
-						>
+						<IconButton onClick={() => props.setDarkMode(!props.darkMode)} size="large">
 							{props.darkMode ? (
 								<Brightness4Icon />
 							) : (
@@ -129,17 +127,17 @@ const SideDrawer = (props) => {
 						whileTap={{ scale: 1 }}
 					>
 						<IconButton
-							aria-label={
+                            aria-label={
 								!isOpen ? 'Open Drawer' : 'Close Drawer'
 							}
-						>
+                            size="large">
 							<ArrowForwardIosRoundedIcon classes={classes} />
 						</IconButton>
 					</motion.div>
 				</Frame>
 			</Tabs>
 		</Frame>
-	)
+    )
 }
 
 SideDrawer.propTypes = {
